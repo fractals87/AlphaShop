@@ -40,4 +40,8 @@ export class ArticoliDataService {
   updArticolo(articolo: Articoli) {
     return this.httpClient.put<ApiMsg>(`http://${this.server}:${this.port}/api/articoli/modifica`, articolo);
   }
+
+  insArticoli(articolo: Articoli){
+    return this.httpClient.post<ApiMsg>(`http://${this.server}:${this.port}/api/articoli/inserisci`, articolo);
+  }
 }

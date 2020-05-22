@@ -16,6 +16,8 @@ export class NewartComponent implements OnInit {
   Conferma: string;
   Errore: string;
 
+  IsModifica: boolean = false;
+
   apiMsg: ApiMsg;
 
   Iva: Iva;
@@ -32,7 +34,6 @@ export class NewartComponent implements OnInit {
     //Otteniamo i dati dell'Iva
     this.articoliService.getIva().subscribe(
       response => {
-
         this.Iva = response;
         console.log(response);
       },
@@ -53,45 +54,57 @@ export class NewartComponent implements OnInit {
       }
     )
     
-    //Otteniamo i dati dell'articolo
-    this.articoliService.getArticoliByCodArt(this.CodArt).subscribe(
-      response => {
+    if(this.CodArt!="-1"){
+      this.IsModifica = true;
+      //Otteniamo i dati dell'articolo
+      this.articoliService.getArticoliByCodArt(this.CodArt).subscribe(
+        response => {
 
-        this.articolo = response;
-        console.log(this.articolo); 
-      },
-      error => {
-        console.log(error);
-      }
-    )
+          this.articolo = response;
+          console.log(this.articolo); 
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }else{
+      this.IsModifica = false;
+    }
   }
 
   salva() {
-    console.log("PIPPO" );
     console.log(this.articolo);
-    
-    this.articoliService.updArticolo(this.articolo).subscribe(
-     
-      response => { 
-        console.log(response);
-
-        this.apiMsg = response;
-        this.Conferma = this.apiMsg.message;
-        
-        console.log(this.Conferma);
-
-       
-      },
-      error => {
-
-        console.log(error);
-
-        this.apiMsg = error.error;
-        this.Errore =  this.apiMsg.message;
-       
-        console.log(this.Errore);    
-      }
-    )
+    if(this.IsModifica){    
+      this.articoliService.updArticolo(this.articolo).subscribe(
+        response => { 
+          console.log(response);
+          this.apiMsg = response;
+          this.Conferma = this.apiMsg.message;
+          console.log(this.Conferma);
+        },
+        error => {
+          console.log(error);
+          this.apiMsg = error.error;
+          this.Errore =  this.apiMsg.message;
+          console.log(this.Errore);    
+        }
+      )
+    }else{
+      this.articoliService.insArticoli(this.articolo).subscribe(
+        response => { 
+          console.log(response);
+          this.apiMsg = response;
+          this.Conferma = this.apiMsg.message;
+          console.log(this.Conferma);
+        },
+        error => {
+          console.log(error);
+          this.apiMsg = error.error;
+          this.Errore =  this.apiMsg.message;
+          console.log(this.Errore);    
+        }
+      )
+    }
   }
 
 }

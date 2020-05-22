@@ -15,83 +15,101 @@
         <div class="alert alert-danger" *ngIf='Errore'>
           {{Errore}}
         </div>
-        <div class="portlet-body form" #artForm="ngForm">
-        <form (ngSubmit)="artForm.valid && salva()" >
-          <div class="form-body">
+        <div class="portlet-body form">
+          <form (ngSubmit)="artForm.valid && salva()" #artForm="ngForm">
+            <div class="form-body">
 
-              <div class="form-group">
-                <label for="codArt">Codice Articolo:</label>
-                <input id="codArt"  type="text" [(ngModel)]="articolo.codArt" class="form-control" placeholder="Codice Articolo"/>
-              </div>
+                <div class="form-group">
+                  <label for="codArt">Codice Articolo:</label>
+                  <input name="codArt"  type="text" [(ngModel)]="articolo.codArt" class="form-control" placeholder="Codice Articolo" required
+                    minlength="5" maxlength="30" #codice="ngModel"/>
+                  <span style="color:red" *ngIf="codice.dirty && codice.invalid">
+                    Il codice articolo deve essere compreso fra 5 e 30 caratteri
+                  </span> 
+                </div>
 
-              <div class="form-group">
-                <label for="descrizione">Descrizione Articolo</label>
-                <input id="descrizione" [(ngModel)]="articolo.descrizione" type="text" class="form-control" placeholder="Descrizione Articolo"/> 	 
-              </div>
+                <div class="form-group">
+                  <label for="descrizione">Descrizione Articolo</label>
+                  <input name="descrizione" [(ngModel)]="articolo.descrizione" type="text" class="form-control" placeholder="Descrizione Articolo"
+                    required  minlength="6" maxlength="80" #desart="ngModel"/> 
+                  <span style="color:red" *ngIf="desart.dirty && desart.invalid">
+                    Il campo Descrizione deve avere un numero di caratteri compreso tra 6 e 80
+                  </span>	 
+                </div>
 
-              <div class="form-group">
-                <label for="um">Unità di Misura</label>
-                <select class="form-control" [(ngModel)]="articolo.um">
-                  <option value="PZ">Pezzi</option> 
-                  <option value="LT">Litri</option>
-                  <option value="KG">Kilogrammi</option>
-                </select>
-              </div>
+                <div class="form-group">
+                  <label for="um">Unità di Misura</label>
+                  <select name="um" class="form-control" [(ngModel)]="articolo.um">
+                    <option value="PZ">Pezzi</option> 
+                    <option value="LT">Litri</option>
+                    <option value="KG">Kilogrammi</option>
+                  </select>
+                </div>
 
-              <div class="form-row">
+                <div class="form-row">
 
                   <div class="form-group col-md-4" >
                     <label for="pzCart">Pezzi Per Cartone:</label>
-                    <input id="pzCart" [(ngModel)]="articolo.pzCart" type="text" class="form-control"/>  
+                    <input name="pzCart" [(ngModel)]="articolo.pzCart" type="number" class="form-control"
+                    required maxlength="3" #pzcart="ngModel" /> 
+                    <span style="color:red" *ngIf="pzcart.dirty && pzcart.invalid">
+                      Il pezzi per cartone devono essere presenti ed avere un valore massimo di 200
+                    </span> 
                   </div>
-  
+
+                  <div>articolo={{articolo | json}}</div>
+
                   <div class="form-group col-md-4">
                     <label for="pesoNetto">Peso Netto:</label>
-                    <input id="pesoNetto" [(ngModel)]="articolo.pesoNetto" type="number" class="form-control"/>  
+                    <input name="pesoNetto" [(ngModel)]="articolo.pesoNetto" type="number" class="form-control"
+                    required #peson="ngModel" />  
+                    <span style="color:red" *ngIf="peson.dirty && peson.invalid">
+                      Il Peso Netto deve avere un valore compreso tra 0.01 e 100
+                    </span>
                   </div>
 
-                  <div class="form-group col-md-4">
-                    <label for="idIva">Iva:</label>
-                    <select class="form-control" [(ngModel)]="articolo.idIva">
-                      <option [ngValue]="iva.idIva" *ngFor="let iva of Iva">{{iva.descrizione}}</option> 
-                    </select>
+                    <div class="form-group col-md-4">
+                      <label for="idIva">Iva:</label>
+                      <select name="idIva" class="form-control" [(ngModel)]="articolo.idIva">
+                        <option [ngValue]="iva.idIva" *ngFor="let iva of Iva">{{iva.descrizione}}</option> 
+                      </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" [(ngModel)]="articolo.idStatoArt" name="idStatoArt" value="1" checked="true">Attivo
+                    </label>
                   </div>
-
-              </div>
-
-              <div class="form-group">
-                <div class="form-check-inline">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" [(ngModel)]="articolo.idStatoArt" name="idStatoArt" value="1" checked="true">Attivo
-                  </label>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" [(ngModel)]="articolo.idStatoArt" name="idStatoArt" value="2">Sospeso
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" [(ngModel)]="articolo.idStatoArt" name="idStatoArt" value="3">Eliminato
+                    </label>
+                  </div>
                 </div>
-                <div class="form-check-inline">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" [(ngModel)]="articolo.idStatoArt" name="idStatoArt" value="2">Sospeso
-                  </label>
+
+                <div class="form-group">
+                  <label for="idFamAss">Famiglia Assortimento:</label>
+                  <select name="idFamAss" class="form-control" [(ngModel)]="articolo.idFamAss">
+                    <option [ngValue]="categoria.id" *ngFor="let categoria of Cat">{{categoria.descrizione}}</option> 
+                  </select>
                 </div>
-                <div class="form-check-inline">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" [(ngModel)]="articolo.idStatoArt" name="idStatoArt" value="3">Eliminato
-                  </label>
-                </div>
-              </div>
+                
+                <hr class="line-form">
 
-              <div class="form-group">
-                <label for="idFamAss">Famiglia Assortimento:</label>
-                <select class="form-control" [(ngModel)]="articolo.idFamAss">
-                  <option [ngValue]="categoria.id" *ngFor="let categoria of Cat">{{categoria.descrizione}}</option> 
-                </select>
-              </div>
-              
-              <hr class="line-form">
+                <button type="submit" id="btnAdd" class="btn btn-primary form-buttons" [disabled]="artForm.invalid">
+                  <i class="fa fa-floppy-o" aria-hidden="true"></i>  Salva
+                </button>
 
-              <button type="submit" id="btnAdd" class="btn btn-primary form-buttons" [disabled]="artForm.invalid">
-                <i class="fa fa-floppy-o" aria-hidden="true"></i>  Salva
-              </button>
-
-          </div>
-        </form>          
+            </div>
+          </form>          
         </div>
     </div>
 </section>
