@@ -21,7 +21,7 @@
 
                 <div class="form-group">
                   <label for="codArt">Codice Articolo:</label>
-                  <input name="codArt"  type="text" [(ngModel)]="articolo.codArt" class="form-control" placeholder="Codice Articolo" required
+                  <input name="codArt"  type="text" [(ngModel)]="articolo.codArt" class="form-control" [readonly]="this.IsModifica" placeholder="Codice Articolo" required
                     minlength="5" maxlength="30" #codice="ngModel"/>
                   <span style="color:red" *ngIf="codice.dirty && codice.invalid">
                     Il codice articolo deve essere compreso fra 5 e 30 caratteri
@@ -56,7 +56,7 @@
                       Il pezzi per cartone devono essere presenti ed avere un valore massimo di 200
                     </span> 
                   </div>
-
+                  <div>{{IsModifica}}</div>
                   <div>articolo={{articolo | json}}</div>
 
                   <div class="form-group col-md-4">
@@ -107,7 +107,10 @@
                 <button type="submit" id="btnAdd" class="btn btn-primary form-buttons" [disabled]="artForm.invalid">
                   <i class="fa fa-floppy-o" aria-hidden="true"></i>  Salva
                 </button>
-
+                
+                <button  id="btnAbort" class="btn btn-warning form-buttons" (click) = abort() >
+                  <i class="fa fa-sign-out" aria-hidden="true"></i>  Annulla
+                </button>
             </div>
           </form>          
         </div>

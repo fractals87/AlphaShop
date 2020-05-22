@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Articoli, Iva, FamAss, ApiMsg } from '../articoli/articoli.component';
 import { ArticoliDataService } from '../services/data/articoli-data.service';
 
@@ -23,11 +23,11 @@ export class NewartComponent implements OnInit {
   Iva: Iva;
   Cat : FamAss;
 
-  constructor(private route:ActivatedRoute, private articoliService: ArticoliDataService) { }
+  constructor(private route:ActivatedRoute, private router:Router, private articoliService: ArticoliDataService) { }
   ngOnInit() {
 
     //Inizializziamo l'articolo
-    this.articolo = new Articoli("-1","","",0,0,0,"1",new Date(), 1, 22, 1);
+    this.articolo = new Articoli("","","",0,0,0,"1",new Date(), 1, 22, 1);
 
     this.CodArt = this.route.snapshot.params['codart'];
 
@@ -72,7 +72,14 @@ export class NewartComponent implements OnInit {
     }
   }
 
+  abort(){
+    this.router.navigate(['articoli',this.CodArt]);
+  }
+
   salva() {
+    this.Conferma = '';
+    this.Errore = '';
+    
     console.log(this.articolo);
     if(this.IsModifica){    
       this.articoliService.updArticolo(this.articolo).subscribe(
@@ -81,6 +88,8 @@ export class NewartComponent implements OnInit {
           this.apiMsg = response;
           this.Conferma = this.apiMsg.message;
           console.log(this.Conferma);
+
+          this.router.navigate(['articoli',this.articolo.codArt]);
         },
         error => {
           console.log(error);
