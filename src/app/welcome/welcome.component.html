@@ -1,0 +1,20 @@
+
+<app-jumbotron [Titolo]="'Benvenuto'" [SottoTitolo]="'Cerca gli articoli da acquistare'" [Show]=false></app-jumbotron>
+<!--
+<div style="text-align: center;">
+    <h1>
+      {{saluti}}
+    </h1>
+    <h3>
+      {{titolo02}}
+    </h3>
+</div>
+-->
+<div>
+  Ciao {{userid}}!
+  <a routerLink="/articoli">Articoli disponibili.</a><br />
+  <button type="button" (click)="getSaluti()" class="btn btn-primary">Saluti</button>
+</div>
+<p>
+  {{messaggio}}
+</p>
