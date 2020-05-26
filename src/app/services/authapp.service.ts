@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { port, server } from '../app-costants';
 
 export class AuthData{
   constructor(
@@ -16,11 +17,11 @@ export class AuthappService {
   
   constructor(private httpClient:HttpClient) { }
 
-  server = "localhost";
-  port = "5001";
+  //server = "localhost";
+  //port = "5001";
 
   autentica(UserId, Password){
-    if(UserId === "Paolo" && Password === "Password1!")
+    if(UserId === "Paolo" && Password === "Password11")
     {
       sessionStorage.setItem("Utente",UserId);
       return true;
@@ -40,7 +41,7 @@ export class AuthappService {
     )
 
     return this.httpClient.get<AuthData>(
-      `http://${this.server}:${this.port}/api/articoli/test`, 
+      `http://${server}:${port}/api/articoli/test`, 
       {headers})
       .pipe(
         map(

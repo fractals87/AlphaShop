@@ -18,6 +18,8 @@ export class NewartComponent implements OnInit {
 
   IsModifica: boolean = false;
 
+  Err403Msg : string = "Non sei autorizzato";
+
   apiMsg: ApiMsg;
 
   Iva: Iva;
@@ -94,7 +96,8 @@ export class NewartComponent implements OnInit {
         error => {
           console.log(error);
           this.apiMsg = error.error;
-          this.Errore =  this.apiMsg.message;
+          this.Errore = (error.status== 403) ? this.Err403Msg :  this.apiMsg.message;
+          
           console.log(this.Errore);    
         }
       )
@@ -109,7 +112,7 @@ export class NewartComponent implements OnInit {
         error => {
           console.log(error);
           this.apiMsg = error.error;
-          this.Errore =  this.apiMsg.message;
+          this.Errore = (error.status== 403) ? this.Err403Msg :  this.apiMsg.message;
           console.log(this.Errore);    
         }
       )
