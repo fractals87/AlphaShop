@@ -65,11 +65,11 @@ export class AuthappService {
   loggedUser()
   {
     let utente = sessionStorage.getItem("Utente");
-    return (sessionStorage.getItem("Utente")!=null)?utente:""
+    return (sessionStorage.getItem("Utente")!=null)?utente:"";
   }
 
   isLogged(){
-    return (sessionStorage.getItem("Utente")!=null)?true:false
+    return (sessionStorage.getItem("Utente")!=null)?true:false;
   }
 
   logOut(){
