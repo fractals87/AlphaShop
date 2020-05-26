@@ -34,7 +34,6 @@ export class ArticoliDataService {
     return this.httpClient.get<Articoli>(`http://${this.server}:${this.port}/api/articoli/cerca/codice/${codart}`);
 
   }
-
   getIva() {
     return this.httpClient.get<Iva>(`http://${this.server}:${this.port}/api/iva`);
   }
