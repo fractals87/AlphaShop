@@ -48,7 +48,7 @@ export class AuthappService {
           data => {
             sessionStorage.setItem("Utente", UserId);
             sessionStorage.setItem("AuthToken", AuthString);
-            return data;
+            return data ;
           }
         )
       );
