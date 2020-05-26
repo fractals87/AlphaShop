@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +17,7 @@ import { Interpolation } from '@angular/compiler';
 
 import {NgxPaginationModule} from 'ngx-pagination';
 import { NewartComponent } from './newart/newart.component';
+import { AuthInterceptService } from './services/http/auth-intercept.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,11 @@ import { NewartComponent } from './newart/newart.component';
     HttpClientModule,
     NgxPaginationModule 
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptService, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

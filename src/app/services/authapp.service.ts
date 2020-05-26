@@ -33,8 +33,10 @@ export class AuthappService {
 
   autenticaService(UserId: string, Password: string) {
 
+    let AuthString = "Basic " + window.btoa(UserId + ":" + Password);
+
     let headers = new HttpHeaders(
-      {Authorization:   "Basic " + window.btoa(UserId + ":" + Password) }
+      {Authorization:   AuthString }
     )
 
     return this.httpClient.get<AuthData>(
@@ -44,10 +46,19 @@ export class AuthappService {
         map(
           data => {
             sessionStorage.setItem("Utente", UserId);
+            sessionStorage.setItem("AuthToken", AuthString);
             return data;
           }
         )
       );
+  }
+
+  getAuthToken(){
+    if(this.loggedUser){
+      return sessionStorage.getItem("AuthToken");
+    }else{
+      return "";
+    }
   }
 
   loggedUser()
