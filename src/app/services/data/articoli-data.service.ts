@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Articoli, ApiMsg, Iva, FamAss } from 'src/app/articoli/articoli.component';
 
 @Injectable({
@@ -11,9 +11,22 @@ export class ArticoliDataService {
 
   constructor(private httpClient:HttpClient) { }
 
+  getBasicAuthHeader(){
+    let UserId = "Paolo";
+    let Password = "Password11";
+
+    let retVal = "Basic " + window.btoa(UserId + ":" + Password);
+
+    return retVal;
+  }
+
   getArticoliByDescription(descrizione : string) {
     
-    return this.httpClient.get<Articoli[]>(`http://${this.server}:${this.port}/api/articoli/cerca/descrizione/${descrizione}`); //ALT + 0096 | ALT GR + '
+    let headers = new HttpHeaders(
+      {Authorization:  this.getBasicAuthHeader() }
+    )
+
+    return this.httpClient.get<Articoli[]>(`http://${this.server}:${this.port}/api/articoli/cerca/descrizione/${descrizione}`, {headers}); //ALT + 0096 | ALT GR + '
     
   }
 

@@ -11,7 +11,7 @@ import { AuthappService } from '../services/authapp.service';
 export class LoginComponent implements OnInit {
 
   userid = 'Paolo'
-  password ="Password1!"
+  password ="Password11"
   auth = null;
   errorMsg = ""
   successMsg = ""
@@ -23,6 +23,23 @@ export class LoginComponent implements OnInit {
 
   gestAut(){
     //console.log(this.userid);
+
+    this.Authapp.autenticaService(this.userid, this.password)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.auth = true;
+          this.route.navigate(['welcome', this.userid]);
+        },
+        error => {
+          console.log(error);
+          this.auth = false;
+        }
+      )
+    }
+
+    /*
+    AUTENTICA HARD CODE
     if(this.Authapp.autentica(this.userid, this.password)){
       this.auth = true;
       this.route.navigate(["welcome", this.userid]);
@@ -30,6 +47,7 @@ export class LoginComponent implements OnInit {
       this.auth = false;
       this.errorMsg = "User o password non corretti"
     }
+    */
 
     /*
     if(this.userid === "Paolo" && this.password === "Password1!"){
@@ -41,5 +59,4 @@ export class LoginComponent implements OnInit {
       this.errorMsg = "User o password non corretti"
     }
     */
-  }
 }
