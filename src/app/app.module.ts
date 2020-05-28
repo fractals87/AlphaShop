@@ -18,6 +18,7 @@ import { Interpolation } from '@angular/compiler';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { NewartComponent } from './newart/newart.component';
 import { AuthInterceptService } from './services/http/auth-intercept.service';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AuthInterceptService } from './services/http/auth-intercept.service';
     FooterComponent,
     JumbotronComponent,
     LogoutComponent,
-    NewartComponent
+    NewartComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,

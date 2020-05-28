@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WelcomeComponent } from '../welcome/welcome.component';
 import { AuthappService } from '../services/authapp.service';
+import { AuthJWTService } from '../services/authJWTservice';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   errorMsg = ""
   successMsg = ""
 
-  constructor(private route : Router, private Authapp: AuthappService) { }
+  //constructor(private route : Router, private Authapp: AuthappService) { }
+  constructor(private route : Router, private Authapp: AuthJWTService) { }
 
   ngOnInit(): void {
   }
